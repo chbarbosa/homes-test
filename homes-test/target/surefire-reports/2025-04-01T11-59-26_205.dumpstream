@@ -1,0 +1,57 @@
+# Created at 2025-04-01T11:59:27.487
+Playwright Host validation warning: 
+
+# Created at 2025-04-01T11:59:27.488
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+
+# Created at 2025-04-01T11:59:27.488
+║ Host system is missing dependencies to run browsers.                                                 ║
+
+# Created at 2025-04-01T11:59:27.488
+║ Please install them with the following command:                                                      ║
+
+# Created at 2025-04-01T11:59:27.488
+║                                                                                                      ║
+
+# Created at 2025-04-01T11:59:27.488
+║     sudo mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps" ║
+
+# Created at 2025-04-01T11:59:27.489
+║                                                                                                      ║
+
+# Created at 2025-04-01T11:59:27.489
+║ Alternatively, use apt:                                                                              ║
+
+# Created at 2025-04-01T11:59:27.489
+║     sudo apt-get install libnss3\                                                                    ║
+
+# Created at 2025-04-01T11:59:27.489
+║         libnspr4\                                                                                    ║
+
+# Created at 2025-04-01T11:59:27.489
+║         libasound2                                                                                   ║
+
+# Created at 2025-04-01T11:59:27.489
+║                                                                                                      ║
+
+# Created at 2025-04-01T11:59:27.490
+║ <3 Playwright Team                                                                                   ║
+
+# Created at 2025-04-01T11:59:27.490
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+# Created at 2025-04-01T11:59:27.490
+    at validateDependenciesLinux (/tmp/playwright-java-10239262061750542209/package/lib/server/registry/dependencies.js:216:9)
+
+# Created at 2025-04-01T11:59:27.490
+    at async Registry._validateHostRequirements (/tmp/playwright-java-10239262061750542209/package/lib/server/registry/index.js:627:43)
+
+# Created at 2025-04-01T11:59:27.490
+    at async Registry._validateHostRequirementsForExecutableIfNeeded (/tmp/playwright-java-10239262061750542209/package/lib/server/registry/index.js:725:7)
+
+# Created at 2025-04-01T11:59:27.490
+    at async Registry.validateHostRequirementsForExecutablesIfNeeded (/tmp/playwright-java-10239262061750542209/package/lib/server/registry/index.js:714:43)
+
+# Created at 2025-04-01T11:59:27.491
+    at async t.<anonymous> (/tmp/playwright-java-10239262061750542209/package/lib/cli/program.js:119:7)
+
