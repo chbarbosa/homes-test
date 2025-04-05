@@ -5,14 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.Paths;
+
 import org.junit.jupiter.api.*;
 
 public class HomesAppHomeTest {
-    private final String HOMES_URL = "http://localhost:4200";
     static Playwright playwright;
     static Browser browser;
     BrowserContext context;
     Page page;
+    private Locator filterInput;
+    private Locator searchButton;
+    private Locator cleanButton;
 
     @BeforeAll
     static void launchBrowser() {
@@ -28,7 +32,11 @@ public class HomesAppHomeTest {
     }
 
     @AfterEach
-    void closeContext() {
+    void teardown(TestInfo testInfo) {
+        if (testInfo.getTags().contains("failed")) {
+            page.screenshot(new Page.ScreenshotOptions()
+                .setPath(Paths.get("screenshots/" + testInfo.getDisplayName() + ".png")));
+        }
         context.close();
     }
 
@@ -39,6 +47,38 @@ public class HomesAppHomeTest {
         page.navigate("http://localhost:4200");
         page.waitForSelector("section.results", 
             new Page.WaitForSelectorOptions().setTimeout(30000));
+        this.filterInput = page.locator("input[name='filterText']");
+        this.searchButton = page.locator("button:has-text('Search')");
+        this.cleanButton = page.locator("button:has-text('Clean')");
+    }
+    
+    @Test
+    public void shouldHaveFilterComponentsVisible() {
+        assertAll(
+            () -> assertTrue(this.filterInput.isVisible(), 
+                "Filter input should be visible"),
+            () -> assertTrue(this.searchButton.isVisible(), 
+                "Search button should be visible"),
+            () -> assertTrue(this.cleanButton.isVisible(), 
+                "Clean button should be visible")
+        );
+    }
+    
+    @Test
+    void shouldFilterByLocation() {
+        // Type into search field
+        this.filterInput.fill("Chicago");
+        this.searchButton.click();
+        
+        // Wait for filtering
+        page.waitForTimeout(1000); // Replace with proper wait in real app
+        
+        // Verify only Chicago listings are visible
+        int visibleHomes = page.locator("app-housing-location:visible").count();
+        int chicagoHomes = page.locator("text='Chicago, IL'").count();
+        
+        assertEquals(visibleHomes, chicagoHomes, 
+            "Should only show Chicago homes when filtered");
     }
 
     @Test
@@ -47,7 +87,7 @@ public class HomesAppHomeTest {
         results.waitFor();
 
         Locator homes = page.locator("app-housing-location");
-        assertTrue(homes.count() > 0);
+        assertTrue(homes.count() == 10);
 
         Locator firstHome = homes.first();
         assertAll(
