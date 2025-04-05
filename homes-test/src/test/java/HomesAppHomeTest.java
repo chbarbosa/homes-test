@@ -80,6 +80,22 @@ public class HomesAppHomeTest {
         assertEquals(visibleHomes, chicagoHomes, 
             "Should only show Chicago homes when filtered");
     }
+    
+    @Test
+    void shouldFilterByInvalidLocation() {
+        // Type into search field
+        this.filterInput.fill("invalid");
+        this.searchButton.click();
+        
+        // Wait for filtering
+        page.waitForTimeout(1000); // Replace with proper wait in real app
+        
+        // Verify only Chicago listings are visible
+        int visibleHomes = page.locator("app-housing-location:visible").count();
+        
+        assertTrue(visibleHomes < 1, "Should not show a list");
+        assertTrue(page.locator("section.info:has-text('No results found')").isVisible(), "Should show info message");
+    }
 
     @Test
     void shouldDisplayHomesList() {
