@@ -16,7 +16,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 
-public class HomesAppDetailsTest {
+public class DetailsPageTest {
     static Playwright playwright;
     static Browser browser;
     BrowserContext context;

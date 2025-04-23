@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.*;
 
-public class HomesAppHomeTest {
+public class HomePageTest {
     static Playwright playwright;
     static Browser browser;
     BrowserContext context;
